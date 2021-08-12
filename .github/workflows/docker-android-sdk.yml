@@ -36,7 +36,7 @@ jobs:
       - name: build & push image (docker-android-sdk:alpine-standalone)
         run: |
           docker buildx build \
-            --platform linux/${{ matrix.arch }}
+            --platform linux/${{ matrix.arch }} \
             --tag ghcr.io/asklios/docker-android-sdk:${{ matrix.distro }}-standalone-${{ matrix.arch }} \
             -f ./${{ matrix.distro }}/standalone/Dockerfile .
           docker push ghcr.io/asklios/docker-android-sdk:${{ matrix.distro }}-standalone-${{ matrix.arch }}
