@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build_arm64:
+  build_multiarch:
     runs-on: ubuntu-latest
     name: Build on ${{ matrix.distro }} ${{ matrix.arch }}
     
@@ -34,13 +34,13 @@ jobs:
       - name: build & push image (docker-android-sdk:alpine-standalone)
         run: |
           docker build \
-            --tag asklios/docker-android-sdk:alpine-standalone-${{ matrix.arch }} \
+            --tag docker.pkg.github.com/asklios/docker-android-sdk/docker-android-sdk:alpine-standalone-${{ matrix.arch }} \
             -f ./alpine/standalone/Dockerfile .
-          docker push ghcr.io/asklios/docker-android-sdk:alpine-standalone-${{ matrix.arch }}
+          docker push docker.pkg.github.com/asklios/docker-android-sdk/docker-android-sdk:alpine-standalone-${{ matrix.arch }}
       
       - name: build & push image (docker-android-sdk:ubuntu-standalone)
         run: |
           docker build \
-            --tag asklios/docker-android-sdk:ubuntu-standalone-${{ matrix.arch }} \
+            --tag docker.pkg.github.com/asklios/docker-android-sdk/docker-android-sdk:ubuntu-standalone-${{ matrix.arch }} \
             -f ./ubuntu/standalone/Dockerfile .
-          docker push ghcr.io/asklios/docker-android-sdk:ubuntu-standalone-${{ matrix.arch }}
+          docker push docker.pkg.github.com/asklios/docker-android-sdk/docker-android-sdk:ubuntu-standalone-${{ matrix.arch }}
