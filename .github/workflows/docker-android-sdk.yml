@@ -12,7 +12,7 @@ jobs:
         with:
           repository: mindrunner/docker-android-sdk
     
-    - name: install buildx
+      - name: install buildx
         id: buildx
         uses: docker/setup-buildx-action@v1
       
