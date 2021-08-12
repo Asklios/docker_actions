@@ -35,11 +35,11 @@ jobs:
           docker build \
             --tag asklios/docker-android-sdk:alpine-standalone \
             -f ./alpine/standalone/Dockerfile .
-          docker push ghcr.io/asklios/docker-android-sdk
+          docker push ghcr.io/asklios/docker-android-sdk:alpine-standalone
       
       - name: build & push image (docker-android-sdk:ubuntu-standalone)
         run: |
           docker build \
             --tag asklios/docker-android-sdk:ubuntu-standalone \
             -f ./ubuntu/standalone/Dockerfile .
-          docker push ghcr.io/asklios/docker-android-sdk
+          docker push ghcr.io/asklios/docker-android-sdk:ubuntu-standalone
