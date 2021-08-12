@@ -4,17 +4,28 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build_arm64:
     runs-on: ubuntu-latest
+    name: Build on ${{ matrix.distro }} ${{ matrix.arch }}
+    
+    strategy:
+      matrix:
+        include:
+          - arch: aarch64
+            distro: ubuntu-latest
+          - distro: ubuntu-latest
+        
     steps:
       - name: Check-out 
         uses: actions/checkout@master
         with:
           repository: mindrunner/docker-android-sdk
-          arch: aarch64
     
       - name: setup docker
         uses: docker-practice/actions-setup-docker@v1
+        with:
+          arch: ${{ matrix.arch }}
+          distro: ${{ matrix.distro }}
       
       - name: Log in to registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
