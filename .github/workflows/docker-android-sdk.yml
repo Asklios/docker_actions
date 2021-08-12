@@ -13,7 +13,8 @@ jobs:
         include:
           - arch: aarch64
             distro: ubuntu-latest
-          - distro: ubuntu-latest
+          - arch: x86
+            distro: ubuntu-latest
         
     steps:
       - name: Check-out 
@@ -33,13 +34,13 @@ jobs:
       - name: build & push image (docker-android-sdk:alpine-standalone)
         run: |
           docker build \
-            --tag asklios/docker-android-sdk:alpine-standalone \
+            --tag asklios/docker-android-sdk:alpine-standalone-${{ matrix.arch }} \
             -f ./alpine/standalone/Dockerfile .
-          docker push ghcr.io/asklios/docker-android-sdk:alpine-standalone
+          docker push ghcr.io/asklios/docker-android-sdk:alpine-standalone-${{ matrix.arch }}
       
       - name: build & push image (docker-android-sdk:ubuntu-standalone)
         run: |
           docker build \
-            --tag asklios/docker-android-sdk:ubuntu-standalone \
+            --tag asklios/docker-android-sdk:ubuntu-standalone-${{ matrix.arch }} \
             -f ./ubuntu/standalone/Dockerfile .
-          docker push ghcr.io/asklios/docker-android-sdk:ubuntu-standalone
+          docker push ghcr.io/asklios/docker-android-sdk:ubuntu-standalone-${{ matrix.arch }}
