@@ -19,25 +19,11 @@ jobs:
       - name: Log in to registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
       
-      - name: build & push image (docker-android-sdk:alpine-lazydl)
-        run: |
-          docker buildx build \
-            --tag asklios/docker-android-sdk:alpine-lazydl \
-            --platform linux/amd64,linux/arm64 -f ./alpine/lazydl/Dockerfile .
-          docker push ghcr.io/asklios/docker-android-sdk
-      
       - name: build & push image (docker-android-sdk:alpine-standalone)
         run: |
           docker buildx build \
             --tag asklios/docker-android-sdk:alpine-standalone \
             --platform linux/amd64,linux/arm64 -f ./alpine/standalone/Dockerfile .
-          docker push ghcr.io/asklios/docker-android-sdk
-          
-      - name: build & push image (docker-android-sdk:ubuntu-lazydl)
-        run: |
-          docker buildx build \
-            --tag asklios/docker-android-sdk:ubuntu-lazydl \
-            --platform linux/amd64,linux/arm64 -f ./ubuntu/lazydl/Dockerfile .
           docker push ghcr.io/asklios/docker-android-sdk
       
       - name: build & push image (docker-android-sdk:ubuntu-standalone)
