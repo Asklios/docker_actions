@@ -22,9 +22,9 @@ jobs:
       - name: build & push image
         run: |
           docker build \
-            --tag ghcr.io/asklios/keycloak:amd64 \
+            --tag ghcr.io/asklios/docker-keycloak:amd64 \
             -f ./server/Dockerfile ./server/
-          docker push ghcr.io/asklios/keycloak:amd64
+          docker push ghcr.io/asklios/docker-keycloak:amd64
           
   build_arm64:
     runs-on: self-hosted
@@ -41,6 +41,6 @@ jobs:
       - name: build & push image
         run: |
           docker build \
-            --tag ghcr.io/asklios/keycloak:arm64 \
+            --tag ghcr.io/asklios/docker-keycloak:arm64 \
             -f ./server/Dockerfile ./server/
-          docker push ghcr.io/asklios/keycloak:arm64
+          docker push ghcr.io/asklios/docker-keycloak:arm64
