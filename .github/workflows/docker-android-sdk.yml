@@ -62,6 +62,7 @@ jobs:
           distro: ubuntu20.04
           run: |
             docker build \
+              --platform linux/arm64 \
               --tag ghcr.io/asklios/docker-android-sdk:${{ matrix.distro }}-standalone-amd64 \
               -f ./${{ matrix.distro }}/standalone/Dockerfile .
             docker push ghcr.io/asklios/docker-android-sdk:${{ matrix.distro }}-standalone-amd64
