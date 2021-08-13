@@ -26,7 +26,7 @@ jobs:
       - name: Log in to registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
       
-      - name: build & push image (docker-android-sdk:alpine-standalone)
+      - name: build & push image (docker-android-sdk:${{ matrix.distro }}-standalone)
         run: |
           docker build \
             --tag ghcr.io/asklios/docker-android-sdk:${{ matrix.distro }}-standalone-amd64 \
@@ -52,7 +52,7 @@ jobs:
       - name: Log in to registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
       
-      - name: build & push image (docker-android-sdk:alpine-standalone)
+      - name: build & push image (docker-android-sdk:${{ matrix.distro }}-standalone)
         run: |
           docker build \
             --tag ghcr.io/asklios/docker-android-sdk:${{ matrix.distro }}-standalone-arm64 \
