@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build_multiarch:
     runs-on: ubuntu-latest
     steps:
       
@@ -23,6 +23,7 @@ jobs:
       - name: build & push image
         run: |
           docker buildx build \
-            --tag asklios/keycloak:latest \
-            --platform linux/amd64,linux/arm64 ./server/
-          docker push ghcr.io/asklios/keycloak
+            --tag ghcr.io/asklios/keycloak:latest \
+            --platform linux/amd64,linux/arm64 \
+            -f ./server/Dockerfile ./server/
+          docker push ghcr.io/asklios/keycloak:latest
