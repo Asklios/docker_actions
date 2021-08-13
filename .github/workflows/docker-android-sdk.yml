@@ -48,9 +48,6 @@ jobs:
         uses: actions/checkout@master
         with:
           repository: mindrunner/docker-android-sdk
-          
-      - name: setup docker
-        uses: docker-practice/actions-setup-docker@v1
       
       - name: Log in to registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
