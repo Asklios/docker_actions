@@ -34,7 +34,7 @@ jobs:
           docker push ghcr.io/asklios/docker-android-sdk:${{ matrix.distro }}-standalone-amd64
 
   build_arm64:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     name: ${{ matrix.distro }} image build on arm64
     
     strategy:
@@ -56,13 +56,8 @@ jobs:
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
       
       - name: build & push image (docker-android-sdk:alpine-standalone)
-        uses: uraimo/run-on-arch-action@v2.0.5
-        with:
-          arch: aarch64
-          distro: ubuntu20.04
-          run: |
-            docker build \
-              --platform linux/arm64 \
-              --tag ghcr.io/asklios/docker-android-sdk:${{ matrix.distro }}-standalone-amd64 \
-              -f ./${{ matrix.distro }}/standalone/Dockerfile .
-            docker push ghcr.io/asklios/docker-android-sdk:${{ matrix.distro }}-standalone-amd64
+        run: |
+          docker build \
+            --tag ghcr.io/asklios/docker-android-sdk:${{ matrix.distro }}-standalone-arm64 \
+            -f ./${{ matrix.distro }}/standalone/Dockerfile .
+          docker push ghcr.io/asklios/docker-android-sdk:${{ matrix.distro }}-standalone-arm64
