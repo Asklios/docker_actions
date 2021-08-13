@@ -33,16 +33,10 @@ jobs:
             -f ./${{ matrix.distro }}/standalone/Dockerfile .
           docker push ghcr.io/asklios/docker-android-sdk:${{ matrix.distro }}-standalone-amd64
 
-  build_arm64:
+  build_arm64-alpine:
     runs-on: self-hosted
-    name: ${{ matrix.distro }} image build on arm64
+    name: alpine image build on arm64
     
-    strategy:
-      matrix:
-        include:
-          - distro: ubuntu
-          - distro: alpine
-        
     steps:
       - name: Check-out 
         uses: actions/checkout@master
@@ -52,9 +46,35 @@ jobs:
       - name: Log in to registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
       
-      - name: build & push image (docker-android-sdk:${{ matrix.distro }}-standalone)
+      - name: build & push image (docker-android-sdk:alpine-standalone)
         run: |
           docker build \
-            --tag ghcr.io/asklios/docker-android-sdk:${{ matrix.distro }}-standalone-arm64 \
-            -f ./${{ matrix.distro }}/standalone/Dockerfile .
-          docker push ghcr.io/asklios/docker-android-sdk:${{ matrix.distro }}-standalone-arm64
+            --tag ghcr.io/asklios/docker-android-sdk:alpine-standalone-arm64 \
+            -f ./alpine/standalone/Dockerfile .
+          docker push ghcr.io/asklios/docker-android-sdk:alpine-standalone-arm64
+          
+  build_arm64-ubuntu:
+    runs-on: self-hosted
+    name: ubuntu image build on arm64
+    
+    steps:
+      - name: Check-out self
+        uses: actions/checkout@master
+        with:
+          path: self
+          
+      - name: Check-out android-sdk
+        uses: actions/checkout@master
+        with:
+          repository: mindrunner/docker-android-sdk
+          path: android-sdk
+      
+      - name: Log in to registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      
+      - name: build & push image (docker-android-sdk:ubuntu-standalone)
+        run: |
+          docker build \
+            --tag ghcr.io/asklios/docker-android-sdk:ubuntu-standalone-arm64 \
+            -f self/android-sdk-ubuntu-standalone-arm ./android-sdk/
+          docker push ghcr.io/asklios/docker-android-sdk:ubuntu-standalone-arm64
