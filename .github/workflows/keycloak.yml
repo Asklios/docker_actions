@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build_multiarch:
+  build_amd64:
     runs-on: ubuntu-latest
     steps:
       
@@ -13,17 +13,34 @@ jobs:
         with:
           repository: keycloak/keycloak-containers
       
-      - name: install buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v1
+      - name: setup docker
+        uses: docker-practice/actions-setup-docker@v1
       
       - name: Log in to registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
       
       - name: build & push image
         run: |
-          docker buildx build \
-            --tag ghcr.io/asklios/keycloak:latest \
-            --platform linux/amd64,linux/arm64 \
+          docker build \
+            --tag ghcr.io/asklios/keycloak:amd64 \
             -f ./server/Dockerfile ./server/
-          docker push ghcr.io/asklios/keycloak:latest
+          docker push ghcr.io/asklios/keycloak:amd64
+          
+  build_arm64:
+    runs-on: self-hosted
+    steps:
+      
+      - name: Check out Keycloak-Containers
+        uses: actions/checkout@master
+        with:
+          repository: keycloak/keycloak-containers
+      
+      - name: Log in to registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      
+      - name: build & push image
+        run: |
+          docker build \
+            --tag ghcr.io/asklios/keycloak:arm64 \
+            -f ./server/Dockerfile ./server/
+          docker push ghcr.io/asklios/keycloak:arm64
