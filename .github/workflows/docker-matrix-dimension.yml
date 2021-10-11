@@ -13,15 +13,14 @@ jobs:
         with:
           repository: turt2live/matrix-dimension
           
-      - name: install buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v1
+      - name: setup docker
+        uses: docker-practice/actions-setup-docker@v1
         
       - name: Log in to registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
         
       - name: build & push image
         run: |
-          docker build \
+          docker build -f ./matrix-dimension \
             --tag ghcr.io/asklios/matrix-dimension:arm64 ./
           docker push ghcr.io/asklios/matrix-dimension:arm64
