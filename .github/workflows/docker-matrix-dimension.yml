@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  build_arm64:
+    runs-on: self-hosted
     steps:
     
       - name: checkout code
@@ -22,7 +22,6 @@ jobs:
         
       - name: build & push image
         run: |
-          docker buildx build --push \
-            --tag ghcr.io/asklios/matrix-dimension:latest \
-            --platform linux/amd64,linux/arm64 ./
-          docker push ghcr.io/asklios/matrix-dimension:latest
+          docker build \
+            --tag ghcr.io/asklios/matrix-dimension:arm64 ./
+          docker push ghcr.io/asklios/matrix-dimension:arm64
