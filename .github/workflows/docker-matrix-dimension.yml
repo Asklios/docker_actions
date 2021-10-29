@@ -40,4 +40,4 @@ jobs:
           file: local/matrix-dimension
           context: ./dimension/
           tags: |
-            ghcr.io/asklios/matrix-dimension_test:latest
+            ghcr.io/asklios/matrix-dimension:latest
