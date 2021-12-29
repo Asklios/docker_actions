@@ -2,8 +2,6 @@ name: onlyoffice-documentserver
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 0 * * *"
 
 jobs:
   build_multiarch:
